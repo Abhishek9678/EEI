@@ -73,6 +73,7 @@ export function MultiDeckHeader() {
               className="text-foreground hover:text-primary transition-colors font-medium"
                >
                 Franchise
+                
                </Link>
 
               {/* Brands dropdown */}
