@@ -10,7 +10,7 @@ export function HeroSection() {
           <div className="space-y-8">
             <div className="space-y-4">
               <h1 className="text-4xl lg:text-6xl font-bold text-primary leading-tight text-balance">
-                Leading the Future of
+                Leading the Future of 
                 <span className="text-blue-600 hover:underline"> Corporate Excellence</span>
               </h1>
               <p className="text-xl text-muted-foreground leading-relaxed text-pretty">
