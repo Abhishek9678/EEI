@@ -1,43 +1,35 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Menu, X, ChevronDown } from "lucide-react"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Menu, X } from "lucide-react"
 
-const brands = [
-  { name: "EEI Energy", href: "/brands/energy" },
-  { name: "EEI Infrastructure", href: "/brands/infrastructure" },
-  { name: "EEI Technology", href: "/brands/technology" },
-  { name: "EEI Consulting", href: "/brands/consulting" },
-]
+// brands removed per request
 
 export function MultiDeckHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    // Trigger enter animation after first paint
+    const timer = requestAnimationFrame(() => setIsMounted(true))
+    return () => cancelAnimationFrame(timer)
+  }, [])
+
   return (
-    <header className="w-full bg-background border-b border-border">
+    <header
+      className={
+        "sticky top-0 z-50 w-full border-b border-border transition-all duration-500 ease-out text-white " +
+        (isMounted
+          ? "opacity-100 translate-y-0 bg-gray/80 backdrop-blur"
+          : "opacity-0 -translate-y-4 bg-black")
+      }
+    >
       {/* Top deck - Brand showcase */}
-      <div className="bg-muted py-2">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between text-sm text-muted-foreground">
-            <div className="hidden md:flex items-center space-x-6">
-              <span>Our Brands:</span>
-              {brands.map((brand) => (
-                <Link key={brand.name} href={brand.href} className="hover:text-primary transition-colors">
-                  {brand.name}
-                </Link>
-              ))}
-            </div>
-            <div className="flex items-center space-x-4">
-              <span>📞 1-800-EEI-CORP</span>
-              <span>✉️ info@eei.com</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      
 
       {/* Main navigation deck */}
       <div className="bg-background">
@@ -59,46 +51,23 @@ export function MultiDeckHeader() {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
-              <Link href="/" className="text-foreground hover:text-primary transition-colors font-medium">
-                Home
-              </Link>
-              <Link href="/about" className="text-foreground hover:text-primary transition-colors font-medium">
+              
+              <Link href="/about" className="text-white hover:text-white/80 transition-colors font-medium">
                 About
               </Link>
-              <Link href="/services" className="text-foreground hover:text-primary transition-colors font-medium">
+              <Link href="/services" className="text-white hover:text-white/80 transition-colors font-medium">
                 Services
               </Link>
-              <Link  
-              href="/franchise" 
-              className="text-foreground hover:text-primary transition-colors font-medium"
-               >
-                Franchise
-                
-               </Link>
+              {/* Franchise link and brands dropdown removed */}
 
-              {/* Brands dropdown */}
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center text-foreground hover:text-primary transition-colors font-medium">
-                  Our Brands
-                  <ChevronDown className="ml-1 h-4 w-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  {brands.map((brand) => (
-                    <DropdownMenuItem key={brand.name} asChild>
-                      <Link href={brand.href}>{brand.name}</Link>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              <Link href="/contact" className="text-foreground hover:text-primary transition-colors font-medium">
+              <Link href="/contact" className="text-white hover:text-white/80 transition-colors font-medium">
                 Contact
               </Link>
             </nav>
 
             {/* CTA Button */}
             <div className="hidden md:flex">
-              <Button className="bg-secondary hover:bg-secondary/90 text-secondary-foreground">Get Started</Button>
+              <Button className="bg-transparent text-white border border-white hover:bg-white/10">Get Started</Button>
             </div>
 
             {/* Mobile menu button */}
@@ -112,36 +81,22 @@ export function MultiDeckHeader() {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-background border-t border-border">
+          <div className="md:hidden bg-black border-t border-border text-white">
             <div className="px-4 py-4 space-y-4">
-              <Link href="/" className="block text-foreground hover:text-primary transition-colors font-medium">
+              <Link href="/" className="block text-white hover:text-white/80 transition-colors font-medium">
                 Home
               </Link>
-              <Link href="/about" className="block text-foreground hover:text-primary transition-colors font-medium">
+              <Link href="/about" className="block text-white hover:text-white/80 transition-colors font-medium">
                 About
               </Link>
-              <Link href="/services" className="block text-foreground hover:text-primary transition-colors font-medium">
+              <Link href="/services" className="block text-white hover:text-white/80 transition-colors font-medium">
                 Services
               </Link>
-              <Link href="/franchise" className="block text-foreground hover:text-primary transition-colors font-medium">
-                Franchise
-              </Link>
-              <div className="space-y-2">
-                <span className="block text-muted-foreground text-sm font-medium">Our Brands</span>
-                {brands.map((brand) => (
-                  <Link
-                    key={brand.name}
-                    href={brand.href}
-                    className="block pl-4 text-foreground hover:text-primary transition-colors"
-                  >
-                    {brand.name}
-                  </Link>
-                ))}
-              </div>
-              <Link href="/contact" className="block text-foreground hover:text-accent transition-colors font-medium">
+              {/* Franchise and brands section removed */}
+              <Link href="/contact" className="block text-white hover:text-white/80 transition-colors font-medium">
                 Contact
               </Link>
-              <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground">
+              <Button className="w-full bg-transparent text-white border border-white hover:bg-white/10">
                 Get Started
               </Button>
             </div>
